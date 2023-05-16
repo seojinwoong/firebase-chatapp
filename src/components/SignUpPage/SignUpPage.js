@@ -19,7 +19,7 @@ const SignUpPage = () => {
             <h2 className='title'>회원가입</h2>
             <form>
               <input type="text" className='common-inputs mb-3' placeholder='이메일'/>
-              {/* <p className='warning'><IoIosWarning /> 에베베</p> */}
+              <p className='warning'><IoIosWarning /> 에베베</p>
               <input type="text" className='common-inputs mb-3' placeholder='이름'/>
               <input type="password" className='common-inputs mb-3' placeholder='패스워드'/>
               <input type="password" className='common-inputs mb-4' placeholder='패스워드 확인'/>
