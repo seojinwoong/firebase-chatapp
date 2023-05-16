@@ -1,15 +1,14 @@
 @charset "utf-8";
-
 :root { 
     --main-color: #3080eb; 
     --main-color2: #1354aa; 
+    --main-color3: #4baa68; 
+    --red-color: #ec3c3d; 
+    --scrollbarBG: #fff; 
+    --thumbBG: #90A4AE; 
 } 
 
-* { margin: 0; padding: 0; vertical-align: top; box-sizing: border-box; } 
-
-html { overflow-y:visible; } 
-body { overflow-y:scroll; } 
-body.noscroll { overflow-y:hidden; } 
+* { margin:0; padding: 0; vertical-align: top; box-sizing: border-box; } 
 
 /* HTML5 display-role reset for older browsers */
 article,
@@ -60,8 +59,27 @@ button { border: 0; }
 
 img { display: block; width: auto; max-width: 100%; } 
 
-main { margin-top: 96px; transition: margin-top .4s cubic-bezier(0.25, 0.46, 0.45, 0.84); } 
-main.hide-banner { margin-top: 96px; } 
+input { outline: none; border: none; } 
+
+input[type="number"] { -moz-appearance: textfield; appearance: none; -webkit-appearance: none; } 
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; } 
+
+input[type="file"] {display: none;}
+
+textarea { outline: none; border: none; } 
+
+textarea:focus, input:focus { border-color: transparent !important; } 
+
+button { outline: none !important; border: none; background: transparent; } 
+
+button:hover { cursor: pointer; } 
+
+/* scrollbar style */
+body::-webkit-scrollbar { width: 11px; } 
+body { scrollbar-width: thin; scrollbar-color: var(--thumbBG) var(--scrollbarBG); } 
+body::-webkit-scrollbar-thumb { background-color: var(--thumbBG); border-radius: 6px; border: 3px solid var(--scrollbarBG); } 
 
 /* clearfix */
 .clearfix { *zoom: 1; } 
@@ -69,8 +87,8 @@ main.hide-banner { margin-top: 96px; }
 .clearfix:after { clear: both; } 
 
 /* float */
-.fl-l {float: left;}
-.fl-r {float: right;}
+.fl-l { float: left; } 
+.fl-r { float: right; } 
 
 /* IR 효과 */
 .ir_pm { display: block; overflow: hidden; font-size: 0; line-height: 0; text-indent: -9999px; } 
@@ -81,7 +99,10 @@ main.hide-banner { margin-top: 96px; }
 .page-container { position: relative; min-width: 1236px; margin: 0 auto; min-height: 100vh; } 
 .shadow { position: absolute; top: 0; left: 0; width: 100%; height: 100vh; background: rgba(0,0,0,0.5); display: none; } 
 
-.common-button { background: var(--main-color); color: #fff; width: 100%; height: 30px; border-radius: 3px; transition: background .2s ease;} 
-.common-button:hover {background: var(--main-color2);}
+.hide {display: none;}
+.common-button { background: var(--main-color); color: #fff; width: 100%; height: 30px; border-radius: 3px; transition: background .2s ease; } 
+.common-button:hover { background: var(--main-color2); } 
 .go-link, .go-link:hover { text-decoration: none; color: var(--main-color) } 
+.warning { color: var(--red-color); } 
 .common-inputs { width: 100%; } 
+.common-inputs + .warning { margin-top: -12px; } 
