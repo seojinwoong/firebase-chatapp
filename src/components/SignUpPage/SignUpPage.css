@@ -13,3 +13,6 @@
 .common-signup-page .upload-user-profile-wrap .profile-row { display: flex; align-items: center; } 
 .common-signup-page .upload-user-profile-wrap .profile-img { width: 80px; margin-right: 20px; } 
 .common-signup-page .upload-user-profile-wrap .upload-btn { width: 150px; height: 34px; background: var(--main-color3)} 
+
+/* 로그인 페이지 */
+#loginPage .inner form{height:auto;}

@@ -1,8 +1,17 @@
-import React from 'react'
+import React from 'react';
+import { getAuth, signOut } from 'firebase/auth';
 
 const ChatPage = () => {
+
+  const handleLogout = () => {
+    const auth = getAuth();
+    signOut(auth);
+  }
+
   return (
-    <div>ChatPage</div>
+    <div>
+      <button onClick={handleLogout}>로그아웃</button>
+    </div>
   )
 }
 
