@@ -2,7 +2,7 @@
 
 .common-signup-page .inner { width: 600px; display: flex; flex-direction: column; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #fff; border-radius: 20px; overflow: hidden; box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1); -moz-box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1); -webkit-box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1); -o-box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1); -ms-box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1); } 
 .common-signup-page .inner h2.title { font-size: 30px; color: #fff; text-align: center; background-color: var(--main-color); height: 80px; display: flex; align-items: center; justify-content: center; font-weight: 600; letter-spacing: -1px; margin-bottom: 0; } 
-.common-signup-page .inner form { padding: 30px 10% 0; height: 73vh; overflow-y: auto; max-height: 640px; } 
+.common-signup-page .inner form { padding: 30px 10% 0; height: 73vh; overflow-y: auto; max-height: 800px; } 
 .common-signup-page .inner .common-inputs { color: #1b3815; display: block; height: 50px; background: #ebebeb; border-radius: 27px; padding: 0 35px; margin-left: auto; margin-right: auto; } 
 .common-signup-page .inner .signup-btn { height: 50px; margin: 50px auto; display: block; } 
 .common-signup-page .question { font-size: 15px; color: #999999; line-height: 1.4; text-align: center; margin-top: 33px; } 
