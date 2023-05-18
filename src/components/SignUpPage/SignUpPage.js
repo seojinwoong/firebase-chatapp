@@ -28,12 +28,11 @@ const SignUpPage = () => {
     if (file) {
       const metadata = { contentType: file.type };
       const storage = getStorage();
-      console.log('file', file)
   
       setUploadLoading(true);
   
       try {
-        const uploadTask = uploadBytesResumable(strRef(storage, `profileUpload/${file.name}`), file, metadata);
+        const uploadTask = uploadBytesResumable(strRef(storage, `profileUpload/${file.lastModified}${file.name}`), file, metadata);
         uploadTask.then(() => {
           getDownloadURL(uploadTask.snapshot.ref).then(downloadURL => {
             setUploadedImgUrl(downloadURL);

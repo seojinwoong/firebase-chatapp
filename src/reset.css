@@ -18,8 +18,8 @@ section { display: block; }
 i { font-style: normal; } 
 
 /* a 링크 초기화 */
-a { color: #333; text-decoration: none; } 
-a:hover { color: #333; } 
+a { color: #262f3f; text-decoration: none; } 
+a:hover { color: #262f3f; } 
 
 /* 폰트 초기화 */
 body,
@@ -27,7 +27,7 @@ input,
 textarea,
 select,
 button,
-table { font-family: 'Helvetica Neue', 'Noto Sans KR', 'Malgun Gothic','맑은 고딕',dotum,'돋움',sans-serif; color: #333; font-size: 13px; line-height: 1.5; } 
+table { font-family: 'Helvetica Neue', 'Noto Sans KR', 'Malgun Gothic','맑은 고딕',dotum,'돋움',sans-serif; color: #262f3f; font-size: 13px; line-height: 1.5; } 
 
 /* table 초기화 */
 table { padding:0; border:0; border-spacing:0px; border-collapse: collapse; } 
