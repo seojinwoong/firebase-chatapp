@@ -1,16 +1,14 @@
 import React from 'react';
-import { getAuth, signOut } from 'firebase/auth';
+import './ChatPage.css';
+import SidePanel from './SidePanel/SidePanel';
+import MainPanel from './MainPanel/MainPanel';
 
 const ChatPage = () => {
 
-  const handleLogout = () => {
-    const auth = getAuth();
-    signOut(auth);
-  }
-
   return (
-    <div>
-      <button onClick={handleLogout}>로그아웃</button>
+    <div id='chatPage' className='page-container'>
+      <SidePanel />
+      <MainPanel />
     </div>
   )
 }

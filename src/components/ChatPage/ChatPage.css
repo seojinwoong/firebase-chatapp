@@ -1,0 +1,9 @@
+@charset "utf-8";
+
+#chatPage { display: flex; } 
+
+/* SidePaenl */
+#chatPage .sidePanel { width: 500px; } 
+
+/* MainPaenl */
+#chatPage .mainPanel { width: calc(100% - 500px); } 
