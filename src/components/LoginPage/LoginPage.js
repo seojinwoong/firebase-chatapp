@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTransition, animated } from 'react-spring';
 import '../SignUpPage/SignUpPage.css';
 import { IoIosWarning } from 'react-icons/io';
 import { Link } from 'react-router-dom';
@@ -14,6 +15,11 @@ const LoginPage = () => {
   const [submitLoading, setSubmitLoading] = useState(false);
   const [errorFromSubmit, setErrorFromSubmit] = useState('');
   const { register, formState: { errors }, handleSubmit } = useForm();
+  const transition = useTransition(errorFromSubmit, {
+    from: { y: 10, opacity: 0 },
+    enter: { y: 0, opacity: 1 },
+    leave: { y: 10, opacity: 0 }
+  })
 
   useEffect(() => {
     return () => {
@@ -31,8 +37,6 @@ const LoginPage = () => {
       setSubmitLoading(false);
 
     } catch (error) {
-      setSubmitLoading(false);
-
       switch (error.code) {
         case 'auth/user-not-found':
           setErrorFromSubmit('존재하지 않는 계정입니다!');
@@ -48,7 +52,8 @@ const LoginPage = () => {
       if (timer) clearTimeout(timer);
       timer = setTimeout(() => {
         setErrorFromSubmit('');
-      }, 3000);
+        setSubmitLoading(false);
+      }, 2000);
     }
   }
 
@@ -80,16 +85,19 @@ const LoginPage = () => {
             </form>
           </div>
       </div>
-        {
-          errorFromSubmit &&
-          <ToastContainer className="p-3 toastWrap" position='bottom-end'>
-            <Toast bg='danger' position='bottom-end'>
-                <Toast.Body>
-                  {errorFromSubmit}
-                </Toast.Body>
-            </Toast>
-          </ToastContainer>
-        }
+      {transition((style, item) => (
+        item !== "" 
+        ? <animated.div style={style} className="toastWrap">
+            <ToastContainer className="p-3" position='bottom-end' >
+              <Toast bg='danger' position='bottom-end'>
+                  <Toast.Body>
+                    {item}
+                  </Toast.Body>
+              </Toast>
+            </ToastContainer>
+          </animated.div>
+        : null
+      ))}
     </div>
   )
 }
