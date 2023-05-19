@@ -100,13 +100,15 @@ button:hover { cursor: pointer; }
 .common-inputs { width: 100%; } 
 .common-inputs + .warning { margin-top: -12px; } 
 button:disabled { background: grey; cursor: not-allowed; } 
+.scroll-x { overflow-x: auto; overflow-y: hidden; white-space: nowrap; -webkit-overflow-scrolling: touch; -ms-overflow-style: none; scrollbar-width: none; } 
+.scroll-x-inner { display: flex; justify-content: space-between; align-items: center; padding-left: 0;}  
 
 /* toast */
-.toastWrap { position: fixed; width: 100%; height: auto; bottom: 0; right: 0;} 
+.toastWrap { position: fixed; width: 100%; height: auto; bottom: 0; right: 0; } 
 .toastWrap .toast-body { color:#fff; } 
 
 /* custom loading */
-.custom_loading {position: fixed; bottom: 20px; right: 30px; } 
+.custom_loading { position: fixed; bottom: 20px; right: 30px; } 
 
 /* loader */
 #loader { background-color: #f6f9ff; height: 100vh; display: flex; align-items: center; justify-content: center; } 

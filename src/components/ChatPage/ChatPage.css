@@ -2,6 +2,7 @@
 
 /* SidePaenl */
 #chatPage .sidePanel { width: 500px; box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px; position: relative; padding-left: 30px; } 
+#chatPage .sect_tit {}
 #chatPage .myInfo { display: flex; margin-top: 50px; padding-right: 30px; position: relative; } 
 #chatPage .myInfo .my-profile { width: 50px; height: 50px; border-radius: 50%; margin-right: 15px; } 
 #chatPage .myInfo .my-profile-name { margin-bottom: 0; } 
@@ -11,6 +12,19 @@
 #chatPage .myInfo .my-info-menu button { padding: 3px 10px; background: var(--main-color); border: 1px solid var(--main-color); } 
 #chatPage .myInfo .my-info-menu .menu-ico { font-size: 24px; } 
 #chatPage .dropdown-toggle::after { display: none; } 
+
+#chatPage .favoriteList {}
+#chatPage .favoriteList .favorite_room_wrapper{}
+#chatPage .favoriteList .favorite_room{}
+#chatPage .favoriteList .favorite_room .favorite_profile{}
+#chatPage .favoriteList .favorite_room .favorite_name{}
+#chatPage .favoriteList .favorite_room .last_chat_time{}
+#chatPage .favoriteList .favorite_room .btn_wrap{}
+#chatPage .favoriteList .favorite_room .badge{}
+#chatPage .favoriteList .favorite_room .badge.opentalk{}
+#chatPage .favoriteList .favorite_room .badge.direct{}
+#chatPage .favoriteList .favorite_room .off_like{}
+
 
 /* MainPaenl */
 #chatPage .mainPanel { width: calc(100% - 500px); background: #f6f8fc; } 
