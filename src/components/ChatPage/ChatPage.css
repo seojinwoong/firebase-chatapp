@@ -1,4 +1,4 @@
-@charset "utf-8";#chatPage { display: flex; } 
+@charset "utf-8"; #chatPage { display: flex; } 
 
 /* SidePaenl */
 #chatPage .sidePanel { width: 500px; box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px; position: relative; padding-left: 30px; } 
@@ -7,7 +7,10 @@
 #chatPage .myInfo .my-profile-name { margin-bottom: 0; } 
 #chatPage .myInfo .my-profile-name .name { display: block; font-size: 20px; font-weight: bold; letter-spacing: -0.3px; line-height: 1.2; word-break: break-all; } 
 #chatPage .myInfo .my-profile-name .email { color: #00a6fb; font-size: 14px; word-break: break-all; display: block; } 
-#chatPage .myInfo .my-info-menu { position: absolute; right: 30px; cursor: pointer; top: 3px; font-size: 30px; } 
+#chatPage .myInfo .my-info-menu { position: absolute; right: 30px; cursor: pointer; top: -5px; font-size: 30px; } 
+#chatPage .myInfo .my-info-menu button { padding: 3px 10px; background: var(--main-color); border: 1px solid var(--main-color); } 
+#chatPage .myInfo .my-info-menu .menu-ico { font-size: 24px; } 
+#chatPage .dropdown-toggle::after { display: none; } 
 
 /* MainPaenl */
 #chatPage .mainPanel { width: calc(100% - 500px); background: #f6f8fc; } 

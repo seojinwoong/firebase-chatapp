@@ -3,8 +3,8 @@ import React from 'react';
 const Loader = () => {
   return (
     <div id="loader">
-      <div class="section__item">
-				<div class="loader07"></div>
+      <div className="section__item">
+				<div className="loader07"></div>
 			</div>
     </div>
   )

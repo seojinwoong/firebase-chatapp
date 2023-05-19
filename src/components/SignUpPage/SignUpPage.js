@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import './SignUpPage.css';
 import { IoIosWarning } from 'react-icons/io';
 import defaultProfile from '../../utils/images/default_profile.png';
@@ -8,11 +8,24 @@ import Spinner from 'react-bootstrap/Spinner';
 import { getAuth, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { getDatabase, ref, set } from 'firebase/database';
 import { getStorage, ref as strRef, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+import { defaultAnimation } from '../../utils/ToastAnimation'; 
+import { useTransition, animated } from 'react-spring';
+import CustomToast from '../../utils/components/CustomToast';
+
+let timer;
 
 const SignUpPage = () => {
   const [submitLoading, setSubmitLoading] = useState(false);
   const [uploadLoading, setUploadLoading] = useState(false);
   const [uploadedImgUrl, setUploadedImgUrl] = useState('');
+  const [errorFromSubmit, setErrorFromSubmit] = useState({txt: "", status: 'danger'});
+  const transition = useTransition(errorFromSubmit, defaultAnimation);
+
+  useEffect(() => {
+    return () => {
+      if (timer) clearTimeout(timer);
+    }
+  }, []);
 
   const { register, watch, formState: { errors }, handleSubmit } = useForm({mode: 'onChange'});
   const uploadImgRef = useRef();
@@ -61,6 +74,7 @@ const SignUpPage = () => {
       if (uploadedImgUrl) updateInfo.photoURL = uploadedImgUrl
 
       await updateProfile(auth.currentUser, updateInfo);
+
       set(ref(getDatabase(), `/users/${createdUser.user.uid}`), {
         name: createdUser.user.displayName,
         image: createdUser.user.photoURL,
@@ -69,9 +83,20 @@ const SignUpPage = () => {
       setSubmitLoading(false);
 
     } catch (error) {
-      alert('회원가입 도중 오류가 발생하였습니다!');
-      console.error(error.message);
-      setSubmitLoading(false);
+      switch (error.code) {
+        case 'auth/email-already-in-use':
+          setErrorFromSubmit(prev => {return {...prev, txt: "이미 사용중인 이메일입니다!"}})
+          break;
+        case 'auth/network-request-failed':
+          setErrorFromSubmit(prev => {return {...prev, txt: "network request failed 😭"}})
+          break;
+      }
+
+      if (timer) clearTimeout(timer);
+      timer = setTimeout(() => {
+        setErrorFromSubmit({txt: "", status: 'danger'});
+        setSubmitLoading(false);
+      }, 2000);
     }
   }
 
@@ -128,6 +153,13 @@ const SignUpPage = () => {
             </form>
           </div>
       </div>
+      {transition((style, item) => (
+        item.txt !== "" 
+        ? <animated.div style={style} className="toastWrap">
+            <CustomToast item={item}/>
+          </animated.div>
+        : null
+      ))}
     </div>
   )
 }

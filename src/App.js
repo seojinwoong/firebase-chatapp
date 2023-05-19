@@ -17,11 +17,11 @@ const App = () => {
   useEffect(() => {
     onAuthStateChanged(auth, user => {
       if (user) {
-        navigate('/');
         dispatch(setUser(user));
+        navigate('/');
       } else {
-        navigate('/login');
         dispatch(clearUser());
+        navigate('/login');
       }
     })
   }, []);

@@ -4,7 +4,7 @@ import MyInfo from './MyInfo';
 const SidePanel = () => {
   return (
     <div className='sidePanel'>
-      <MyInfo />
+      <MyInfo/>
     </div>  
   )
 }

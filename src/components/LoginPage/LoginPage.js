@@ -6,20 +6,16 @@ import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import Spinner from 'react-bootstrap/Spinner';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
-import ToastContainer from 'react-bootstrap/ToastContainer';
-import Toast from 'react-bootstrap/Toast';
+import CustomToast from '../../utils/components/CustomToast';
+import { defaultAnimation } from '../../utils/ToastAnimation'; 
 
 let timer;
 
 const LoginPage = () => {
   const [submitLoading, setSubmitLoading] = useState(false);
-  const [errorFromSubmit, setErrorFromSubmit] = useState('');
+  const [errorFromSubmit, setErrorFromSubmit] = useState({txt: "", status: 'danger'});
   const { register, formState: { errors }, handleSubmit } = useForm();
-  const transition = useTransition(errorFromSubmit, {
-    from: { y: 10, opacity: 0 },
-    enter: { y: 0, opacity: 1 },
-    leave: { y: 10, opacity: 0 }
-  })
+  const transition = useTransition(errorFromSubmit, defaultAnimation);
 
   useEffect(() => {
     return () => {
@@ -39,19 +35,19 @@ const LoginPage = () => {
     } catch (error) {
       switch (error.code) {
         case 'auth/user-not-found':
-          setErrorFromSubmit('존재하지 않는 계정입니다!');
+          setErrorFromSubmit(prev => {return {...prev, txt: "존재하지 않는 계정입니다!"}})
           break;
         case 'auth/wrong-password':
-          setErrorFromSubmit('비밀번호가 일치하지 않습니다!');
+          setErrorFromSubmit(prev => {return {...prev, txt: "비밀번호가 일치하지 않습니다!"}})
           break;
         case 'auth/too-many-requests':
-          setErrorFromSubmit('too many requests 😭');
+          setErrorFromSubmit(prev => {return {...prev, txt: "too many requests 😭"}})
           break;
       }
       
       if (timer) clearTimeout(timer);
       timer = setTimeout(() => {
-        setErrorFromSubmit('');
+        setErrorFromSubmit({txt: "", status: 'danger'});
         setSubmitLoading(false);
       }, 2000);
     }
@@ -86,15 +82,9 @@ const LoginPage = () => {
           </div>
       </div>
       {transition((style, item) => (
-        item !== "" 
+        item.txt !== "" 
         ? <animated.div style={style} className="toastWrap">
-            <ToastContainer className="p-3" position='bottom-end' >
-              <Toast bg='danger' position='bottom-end'>
-                  <Toast.Body>
-                    {item}
-                  </Toast.Body>
-              </Toast>
-            </ToastContainer>
+            <CustomToast item={item}/>
           </animated.div>
         : null
       ))}
