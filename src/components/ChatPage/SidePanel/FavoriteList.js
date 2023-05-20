@@ -1,6 +1,6 @@
 import React from 'react';
 import defaultProfile from '../../../utils/images/default_profile.png';
-import {GrGroup} from 'react-icons/gr';
+import {HiUserGroup} from 'react-icons/hi';
 import {BsFillChatSquareTextFill} from 'react-icons/bs';
 import {TbHeartOff} from 'react-icons/tb';
 
@@ -9,47 +9,68 @@ const FavoriteList = () => {
   return (
     <div className='favoriteList mt-5'>
       <p className='sect_tit'>즐겨찾기</p>
-      
-      <div className="scroll-x">
-        <ul className='scroll-x-inner favorite_room_wrapper'>
-          <li className='favorite_room'>
-            <img className="favorite_profile" src={defaultProfile} alt="유저 썸네일 이미지"/>
-            <p className='favorite_name'>Jospasdkjhasd watererses</p>
+      <ul className='scroll-x favorite_room_wrapper'> 
+
+        <li className='scroll-x-item favorite_room'>
+          <img className="favorite_profile" src={defaultProfile} alt="유저 썸네일 이미지"/>
+          <div className='favorite_box'>
+            <p className='favorite_name ellipsis_2'>Jospasdkjhasd watererses1</p>
             <p className='last_chat_time'>24 mins ago</p>
-            <div className='btn_wrap clearfix'>
-              <span className='badge opentalk'><GrGroup /></span>
-              <TbHeartOff className="off_like"/>
+            <div className='btn_wrap'>
+              <span className='badge opentalk'><HiUserGroup /></span>
+              <span className='badge off_like'><TbHeartOff /></span>
             </div>
-          </li>
-          <li className='favorite_room'>
-            <img className="favorite_profile" src={defaultProfile} alt="유저 썸네일 이미지"/>
-            <p className='favorite_name'>Jospasdkjhasd watererses</p>
+          </div>
+        </li>
+        <li className='scroll-x-item favorite_room'>
+          <img className="favorite_profile" src={defaultProfile} alt="유저 썸네일 이미지"/>
+          <div className='favorite_box'>
+            <p className='favorite_name ellipsis_2'>Jospasdkjhasd watererses2</p>
             <p className='last_chat_time'>24 mins ago</p>
-            <div className='btn_wrap clearfix'>
+            <div className='btn_wrap'>
               <span className='badge direct'><BsFillChatSquareTextFill /></span>
-              <TbHeartOff className="off_like"/>
+              <span className='badge off_like'><TbHeartOff /></span>
             </div>
-          </li>
-          <li className='favorite_room'>
-            <img className="favorite_profile" src={defaultProfile} alt="유저 썸네일 이미지"/>
-            <p className='favorite_name'>Jospasdkjhasd watererses</p>
+          </div>
+        </li>
+
+        <li className='scroll-x-item favorite_room'>
+          <img className="favorite_profile" src={defaultProfile} alt="유저 썸네일 이미지"/>
+          <div className='favorite_box'>
+            <p className='favorite_name ellipsis_2'>Jospasdkjhasd watererses3</p>
             <p className='last_chat_time'>24 mins ago</p>
-            <div className='btn_wrap clearfix'>
-              <span className='badge opentalk'><GrGroup /></span>
-              <TbHeartOff className="off_like"/>
+            <div className='btn_wrap'>
+              <span className='badge opentalk'><HiUserGroup /></span>
+              <span className='badge off_like'><TbHeartOff /></span>
             </div>
-          </li>
-          <li className='favorite_room'>
-            <img className="favorite_profile" src={defaultProfile} alt="유저 썸네일 이미지"/>
-            <p className='favorite_name'>Jospasdkjhasd watererses</p>
+          </div>
+        </li>
+
+        <li className='scroll-x-item favorite_room'>
+          <img className="favorite_profile" src={defaultProfile} alt="유저 썸네일 이미지"/>
+          <div className='favorite_box'>
+            <p className='favorite_name ellipsis_2'>Jospasdkjhasd watererses4</p>
             <p className='last_chat_time'>24 mins ago</p>
-            <div className='btn_wrap clearfix'>
+            <div className='btn_wrap'>
               <span className='badge direct'><BsFillChatSquareTextFill /></span>
-              <TbHeartOff className="off_like"/>
+              <span className='badge off_like'><TbHeartOff /></span>
             </div>
-          </li>
-        </ul>
-      </div>
+          </div>
+        </li>
+        
+        <li className='scroll-x-item favorite_room'>
+          <img className="favorite_profile" src={defaultProfile} alt="유저 썸네일 이미지"/>
+          <div className='favorite_box'>
+            <p className='favorite_name ellipsis_2'>Jospasdkjhasd watererses4</p>
+            <p className='last_chat_time'>24 mins ago</p>
+            <div className='btn_wrap'>
+              <span className='badge direct'><BsFillChatSquareTextFill /></span>
+              <span className='badge off_like'><TbHeartOff /></span>
+            </div>
+          </div>
+        </li>
+
+      </ul>
 
     </div>
   )

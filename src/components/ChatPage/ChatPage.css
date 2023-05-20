@@ -1,8 +1,10 @@
-@charset "utf-8"; #chatPage { display: flex; } 
+@charset "utf-8"; 
+
+#chatPage { display: flex; } 
 
 /* SidePaenl */
 #chatPage .sidePanel { width: 500px; box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px; position: relative; padding-left: 30px; } 
-#chatPage .sect_tit {}
+#chatPage .sect_tit { font-size: 22px; font-weight: bold; margin-bottom: 15px; } 
 #chatPage .myInfo { display: flex; margin-top: 50px; padding-right: 30px; position: relative; } 
 #chatPage .myInfo .my-profile { width: 50px; height: 50px; border-radius: 50%; margin-right: 15px; } 
 #chatPage .myInfo .my-profile-name { margin-bottom: 0; } 
@@ -13,17 +15,16 @@
 #chatPage .myInfo .my-info-menu .menu-ico { font-size: 24px; } 
 #chatPage .dropdown-toggle::after { display: none; } 
 
-#chatPage .favoriteList {}
-#chatPage .favoriteList .favorite_room_wrapper{}
-#chatPage .favoriteList .favorite_room{}
-#chatPage .favoriteList .favorite_room .favorite_profile{}
-#chatPage .favoriteList .favorite_room .favorite_name{}
-#chatPage .favoriteList .favorite_room .last_chat_time{}
-#chatPage .favoriteList .favorite_room .btn_wrap{}
-#chatPage .favoriteList .favorite_room .badge{}
-#chatPage .favoriteList .favorite_room .badge.opentalk{}
-#chatPage .favoriteList .favorite_room .badge.direct{}
-#chatPage .favoriteList .favorite_room .off_like{}
+#chatPage .favoriteList .favorite_room_wrapper { width: 210px; height: 470px; padding-left: 20px; transform: rotate(-90deg) translateY(-210px); border: 1px solid rgba(0, 0, 0, 0);} 
+#chatPage .favoriteList .favorite_room { width: 160px; height: 170px; cursor: pointer; transform: rotate(90deg) translateX(161px); border: 1px solid rgba(0, 0, 0, 0);} 
+#chatPage .favoriteList .favorite_room .favorite_profile { width: 50px; height: 50px; border-radius: 50%; margin: -30px 0 -20px 15px; } 
+#chatPage .favoriteList .favorite_room .favorite_box { padding: 30px 10px; border-radius: 5px; overflow: hidden; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; background: #fff; } 
+#chatPage .favoriteList .favorite_room .favorite_name { font-weight: bold; line-height: 19px; max-height: 38px; margin-top: 3px; margin-bottom: 6px; } 
+#chatPage .favoriteList .favorite_room .last_chat_time { color: #bcb8b1; margin-bottom: 10px; font-size: 14px; margin-top: -2px; } 
+#chatPage .favoriteList .favorite_room .badge { font-size: 20px; width: 34px; height: 34px; padding: 0; display: inline-flex; align-items: center; justify-content: center; margin-right: 5px; } 
+#chatPage .favoriteList .favorite_room .badge.opentalk { background: #eb5e28; } 
+#chatPage .favoriteList .favorite_room .badge.direct { background: #2b9348; } 
+#chatPage .favoriteList .favorite_room .badge.off_like { background: #0077b6; } 
 
 
 /* MainPaenl */

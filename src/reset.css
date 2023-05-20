@@ -1,4 +1,5 @@
-@charset "utf-8"; :root { --main-color: #3080eb; --main-color2: #1354aa; --main-color3: #4baa68; --red-color: #ec3c3d; } 
+@charset "utf-8";
+:root { --main-color: #3080eb; --main-color2: #1354aa; --main-color3: #4baa68; --red-color: #ec3c3d; } 
 
 * { margin:0; padding: 0; vertical-align: top; box-sizing: border-box; } 
 
@@ -27,7 +28,7 @@ input,
 textarea,
 select,
 button,
-table { font-family: 'Helvetica Neue', 'Noto Sans KR', 'Malgun Gothic','맑은 고딕',dotum,'돋움',sans-serif; color: #262f3f; font-size: 13px; line-height: 1.5; } 
+table { font-family: 'Helvetica Neue', 'Noto Sans KR', 'Malgun Gothic','맑은 고딕',dotum,'돋움',sans-serif !important; color: #262f3f; font-size: 13px; line-height: 1.5; } 
 
 /* table 초기화 */
 table { padding:0; border:0; border-spacing:0px; border-collapse: collapse; } 
@@ -100,8 +101,11 @@ button:hover { cursor: pointer; }
 .common-inputs { width: 100%; } 
 .common-inputs + .warning { margin-top: -12px; } 
 button:disabled { background: grey; cursor: not-allowed; } 
-.scroll-x { overflow-x: auto; overflow-y: hidden; white-space: nowrap; -webkit-overflow-scrolling: touch; -ms-overflow-style: none; scrollbar-width: none; } 
-.scroll-x-inner { display: flex; justify-content: space-between; align-items: center; padding-left: 0;}  
+.ellipsis_2 { overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+.scroll-x { overflow-y: scroll; overflow-x: hidden; transform-origin: right top; } 
+.scroll-x-item {  transform-origin: right top; }
+.scroll-x::-webkit-scrollbar {width: 0px; height: 0px;}
+.scroll-x::-webkit-scrollbar-button {width: 0px; height: 0px;}
 
 /* toast */
 .toastWrap { position: fixed; width: 100%; height: auto; bottom: 0; right: 0; } 
