@@ -14,7 +14,6 @@ export class Roomwrap extends Component {
 
   componentDidMount() {
     this.AddChatRoomsListener();
-
     if (this.props.me) {
       this.AddUsersListener(this.props.me.uid);
     }
