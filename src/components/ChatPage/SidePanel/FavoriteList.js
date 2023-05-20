@@ -7,12 +7,12 @@ import {TbHeartOff} from 'react-icons/tb';
 
 const FavoriteList = () => {
   return (
-    <div className='favoriteList mt-5'>
+    <div className='favoriteList'>
       <p className='sect_tit'>즐겨찾기</p>
       <ul className='scroll-x favorite_room_wrapper'> 
 
         <li className='scroll-x-item favorite_room'>
-          <img className="favorite_profile" src={defaultProfile} alt="유저 썸네일 이미지"/>
+          <img className="favorite_profile profile-thumb" src={defaultProfile} alt="유저 썸네일 이미지"/>
           <div className='favorite_box'>
             <p className='favorite_name ellipsis_2'>Jospasdkjhasd watererses1</p>
             <p className='last_chat_time'>24 mins ago</p>
@@ -23,7 +23,7 @@ const FavoriteList = () => {
           </div>
         </li>
         <li className='scroll-x-item favorite_room'>
-          <img className="favorite_profile" src={defaultProfile} alt="유저 썸네일 이미지"/>
+          <img className="favorite_profile profile-thumb" src={defaultProfile} alt="유저 썸네일 이미지"/>
           <div className='favorite_box'>
             <p className='favorite_name ellipsis_2'>Jospasdkjhasd watererses2</p>
             <p className='last_chat_time'>24 mins ago</p>
@@ -35,7 +35,7 @@ const FavoriteList = () => {
         </li>
 
         <li className='scroll-x-item favorite_room'>
-          <img className="favorite_profile" src={defaultProfile} alt="유저 썸네일 이미지"/>
+          <img className="favorite_profile profile-thumb" src={defaultProfile} alt="유저 썸네일 이미지"/>
           <div className='favorite_box'>
             <p className='favorite_name ellipsis_2'>Jospasdkjhasd watererses3</p>
             <p className='last_chat_time'>24 mins ago</p>
@@ -47,7 +47,7 @@ const FavoriteList = () => {
         </li>
 
         <li className='scroll-x-item favorite_room'>
-          <img className="favorite_profile" src={defaultProfile} alt="유저 썸네일 이미지"/>
+          <img className="favorite_profile profile-thumb" src={defaultProfile} alt="유저 썸네일 이미지"/>
           <div className='favorite_box'>
             <p className='favorite_name ellipsis_2'>Jospasdkjhasd watererses4</p>
             <p className='last_chat_time'>24 mins ago</p>
@@ -59,7 +59,7 @@ const FavoriteList = () => {
         </li>
         
         <li className='scroll-x-item favorite_room'>
-          <img className="favorite_profile" src={defaultProfile} alt="유저 썸네일 이미지"/>
+          <img className="favorite_profile profile-thumb" src={defaultProfile} alt="유저 썸네일 이미지"/>
           <div className='favorite_box'>
             <p className='favorite_name ellipsis_2'>Jospasdkjhasd watererses4</p>
             <p className='last_chat_time'>24 mins ago</p>

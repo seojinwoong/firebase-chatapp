@@ -1,12 +1,13 @@
-@charset "utf-8"; 
+@charset "utf-8";
 
 #chatPage { display: flex; } 
 
 /* SidePaenl */
+.modal-header { background: var(--main-color); color: #fff; } 
 #chatPage .sidePanel { width: 500px; box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px; position: relative; padding-left: 30px; } 
 #chatPage .sect_tit { font-size: 22px; font-weight: bold; margin-bottom: 15px; } 
 #chatPage .myInfo { display: flex; margin-top: 50px; padding-right: 30px; position: relative; } 
-#chatPage .myInfo .my-profile { width: 50px; height: 50px; border-radius: 50%; margin-right: 15px; } 
+#chatPage .myInfo .my-profile { margin-right: 15px; } 
 #chatPage .myInfo .my-profile-name { margin-bottom: 0; } 
 #chatPage .myInfo .my-profile-name .name { display: block; font-size: 20px; font-weight: bold; letter-spacing: -0.3px; line-height: 1.2; word-break: break-all; } 
 #chatPage .myInfo .my-profile-name .email { color: #00a6fb; font-size: 14px; word-break: break-all; display: block; } 
@@ -15,9 +16,10 @@
 #chatPage .myInfo .my-info-menu .menu-ico { font-size: 24px; } 
 #chatPage .dropdown-toggle::after { display: none; } 
 
-#chatPage .favoriteList .favorite_room_wrapper { width: 210px; height: 470px; padding-left: 20px; transform: rotate(-90deg) translateY(-210px); border: 1px solid rgba(0, 0, 0, 0);} 
-#chatPage .favoriteList .favorite_room { width: 160px; height: 170px; cursor: pointer; transform: rotate(90deg) translateX(161px); border: 1px solid rgba(0, 0, 0, 0);} 
-#chatPage .favoriteList .favorite_room .favorite_profile { width: 50px; height: 50px; border-radius: 50%; margin: -30px 0 -20px 15px; } 
+#chatPage .favoriteList { margin-top: 30px; height: 280px; } 
+#chatPage .favoriteList .favorite_room_wrapper { width: 210px; height: 470px; padding-left: 20px; transform: rotate(-90deg) translateY(-210px); border: 1px solid rgba(0, 0, 0, 0); } 
+#chatPage .favoriteList .favorite_room { width: 160px; height: 170px; cursor: pointer; transform: rotate(90deg) translateX(161px); border: 1px solid rgba(0, 0, 0, 0); } 
+#chatPage .favoriteList .favorite_room .favorite_profile { margin: -30px 0 -20px 15px; } 
 #chatPage .favoriteList .favorite_room .favorite_box { padding: 30px 10px; border-radius: 5px; overflow: hidden; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; background: #fff; } 
 #chatPage .favoriteList .favorite_room .favorite_name { font-weight: bold; line-height: 19px; max-height: 38px; margin-top: 3px; margin-bottom: 6px; } 
 #chatPage .favoriteList .favorite_room .last_chat_time { color: #bcb8b1; margin-bottom: 10px; font-size: 14px; margin-top: -2px; } 
@@ -25,6 +27,27 @@
 #chatPage .favoriteList .favorite_room .badge.opentalk { background: #eb5e28; } 
 #chatPage .favoriteList .favorite_room .badge.direct { background: #2b9348; } 
 #chatPage .favoriteList .favorite_room .badge.off_like { background: #0077b6; } 
+
+#chatPage .roomWrap .tab_wrapper { margin-bottom: 10px; } 
+#chatPage .roomWrap .tab_wrapper span { margin-right: 10px; font-size: 22px; font-weight: bold; color: #bfc0c0; cursor: pointer; } 
+#chatPage .roomWrap .tab_wrapper span.active { color: #212529; } 
+#chatPage .roomWrap .search_form { width: calc(100% - 30px); border-bottom: 1px solid #949494; padding-bottom: 5px; } 
+#chatPage .roomWrap .search_form:focus { border-bottom: 1px solid #949494 !important; } 
+#chatPage .roomWrap .roomBox { margin-top: 20px; } 
+#chatPage .roomWrap .roomBox.direct-view .directChat {display: block;}
+#chatPage .roomWrap .roomBox.direct-view .openChat,
+#chatPage .roomWrap .roomBox .directChat {display: none;}
+
+#chatPage .chat { padding-right: 30px; max-height: 500px; overflow-y: auto; } 
+#chatPage .chat .chat_item { display: flex; border-radius: 5px; background: #edf2fb; margin-bottom: 10px; cursor: pointer; padding: 10px; transition: background .3s; } 
+#chatPage .openChat .chat_item:hover { background: #0077b6; } 
+#chatPage .openChat .chat_item:hover * { color:#fff; } 
+#chatPage .directChat .chat_item { background: #d8f3dc; } 
+#chatPage .directChat .chat_item:hover { background: #52b788; } 
+#chatPage .directChat .chat_item:hover * { color:#fff; } 
+#chatPage .chat .profile-thumb { margin-right: 10px; } 
+#chatPage .chat .chat_tit { font-size: 19px; font-weight: bold; margin-bottom: 2px; transition: color .3s;} 
+#chatPage .chat .chat_desc { font-size: 14px; line-height: 1.2; margin-bottom: 4px; color: #333; transition: color .3s;} 
 
 
 /* MainPaenl */
