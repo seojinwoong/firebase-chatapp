@@ -32,16 +32,19 @@ const MyInfo = () => {
   const uploadImgRef = useRef();
 
   useEffect(() => {
-    onChildAdded(child(ref(getDatabase(), 'users'), me.uid), DataSnapshot => {
-      let data = {};
-      data[DataSnapshot.key] = DataSnapshot.val();
-      setMyInfo(prev => { return {...prev, ...data}});
-      setFirstLoad(false);
-    });
+    if (me) {
+      onChildAdded(child(ref(getDatabase(), 'users'), me.uid), DataSnapshot => {
+        let data = {};
+        data[DataSnapshot.key] = DataSnapshot.val();
+        setMyInfo(prev => { return {...prev, ...data}});
+        setFirstLoad(false);
+      });
+    }
+    
     return () => {
       if (timer) clearTimeout(timer);
     }
-  }, []);
+  }, [me]);
 
   const handleLogout = () => {
     signOut(auth);

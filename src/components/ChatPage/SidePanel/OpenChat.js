@@ -1,15 +1,15 @@
-import React from 'react';
+import React, { memo } from 'react';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 import defaultProfile from '../../../utils/images/default_profile.png';
 
-const OpenChat = ({chatRooms}) => {
-
+const OpenChat = ({chatRooms, isRender}) => {
   const now = new Date();
+
   const renderChatRooms = (rooms) =>
     rooms.length > 0 &&
     rooms.map(room => (
-      <div className='chat_item' key={room.id}>
+      <div className='chat_item open_chat_item' key={room.id}>
         <OverlayTrigger 
           placement="top" 
           overlay={
@@ -23,6 +23,7 @@ const OpenChat = ({chatRooms}) => {
         <div>
           <p className="chat_tit">{room.name}</p>
           <p className='chat_desc'>{room.description}</p>
+          <input className="chat_creator" type="hidden" value={room.createdBy.name}/>
         </div>
       </div>
 
@@ -36,4 +37,4 @@ const OpenChat = ({chatRooms}) => {
   )
 }
 
-export default OpenChat
+export default memo(OpenChat);
