@@ -3,7 +3,7 @@ import OpenChat from './OpenChat';
 import DirectChat from './DirectChat';
 import { connect } from 'react-redux';
 import { getDatabase, ref, push, update, child, onChildAdded, onValue } from 'firebase/database';
-
+import { preventSymbol } from '../../../utils/utils';
 export class Roomwrap extends Component {
   state = {
     chatRoomsRef: ref(getDatabase(), 'chatRooms'),
@@ -57,7 +57,7 @@ export class Roomwrap extends Component {
   }
 
   handleSearchTalk = (e) => {
-      this.setState({ searchTerm: e.target.value }, () => this.renderSearchResult());
+      this.setState({ searchTerm: preventSymbol(e.target.value) }, () => this.renderSearchResult());
   }
 
   renderSearchResult = () => {
@@ -91,14 +91,14 @@ export class Roomwrap extends Component {
   }
 
   render() {
-    const { chatRooms, users, isRender } = this.state;
+    const { chatRooms, users, isRender, searchTerm } = this.state;
     return (
       <div className='roomWrap'>
       <div className='tab_wrapper'>
         <span className="active" onClick={() => {this.handleTabClick(0)}}>공개톡</span>
         <span onClick={() => {this.handleTabClick(1)}}>개인톡</span>
       </div>
-      <input type="text" className='search_form' placeholder='🔍︎ 검색' onKeyUp={this.handleSearchTalk}/>
+      <input type="text" className='search_form' placeholder='🔍︎ 검색' onChange={this.handleSearchTalk} value={searchTerm}/>
 
       <div className='roomBox'>
         <div ref={(ref) => { this.openChat = ref }}>
