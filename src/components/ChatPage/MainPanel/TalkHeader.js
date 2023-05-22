@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 import defaultProfile from '../../../utils/images/default_profile.png';
@@ -7,6 +7,13 @@ import { AiOutlineHeart } from 'react-icons/ai'
 import { BsSearch } from 'react-icons/bs'
 
 const TalkHeader = () => {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [isSearchTermView, setIsSearchTermView] = useState(false);
+
+  const handleChange = (e) => {
+    setSearchTerm(e.target.value);
+  }
+
   return (
     <div className='talkHeader'>  
       <div className="talkHeaderInner">
@@ -31,13 +38,16 @@ const TalkHeader = () => {
             <FaUserAlt /> 5
           </span>
           <span className='badge'><AiOutlineHeart /></span>
-          <span className='badge'><BsSearch /></span>
+          <span className='badge' onClick={() => setIsSearchTermView(prev => !prev)}><BsSearch /></span>
         </div>
       </div>
-      <div className='search_term_wrap'>
-        <span className='ico'><BsSearch/></span>
-        <input type="text" className='search_term' />
-      </div>
+      {
+        isSearchTermView 
+        && <div className='search_term_wrap'>
+            <span className='ico'><BsSearch/></span>
+            <input type="text" className='search_term' value={searchTerm} onChange={handleChange}/>
+          </div>
+      }
     </div>
   )
 }

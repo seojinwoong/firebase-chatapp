@@ -4,6 +4,7 @@ import DirectChat from './DirectChat';
 import { connect } from 'react-redux';
 import { getDatabase, ref, push, update, child, onChildAdded, onValue } from 'firebase/database';
 import { preventSymbol } from '../../../utils/utils';
+import { BsSearch } from 'react-icons/bs'
 export class Roomwrap extends Component {
   state = {
     chatRoomsRef: ref(getDatabase(), 'chatRooms'),
@@ -98,8 +99,10 @@ export class Roomwrap extends Component {
         <span className="active" onClick={() => {this.handleTabClick(0)}}>공개톡</span>
         <span onClick={() => {this.handleTabClick(1)}}>개인톡</span>
       </div>
-      <input type="text" className='search_form' placeholder='🔍︎ 검색' onChange={this.handleSearchTalk} value={searchTerm}/>
-
+      <div className='search_term_wrap '>
+        <span className='ico'><BsSearch/></span>
+        <input type="text" className='search_term' onChange={this.handleSearchTalk} value={searchTerm} placeholder='검색'/>
+      </div>
       <div className='roomBox'>
         <div ref={(ref) => { this.openChat = ref }}>
           <OpenChat chatRooms={chatRooms} isRender={isRender}/>

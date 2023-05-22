@@ -28,17 +28,16 @@
 #chatPage .favoriteList .favorite_room .badge.direct { background: #2b9348; } 
 #chatPage .favoriteList .favorite_room .badge.off_like { background: #0077b6; } 
 
+#chatPage .roomWrap {padding-right: 30px;}
 #chatPage .roomWrap .tab_wrapper { margin-bottom: 10px; } 
 #chatPage .roomWrap .tab_wrapper span { margin-right: 10px; font-size: 22px; font-weight: bold; color: #bfc0c0; cursor: pointer; } 
 #chatPage .roomWrap .tab_wrapper span.active { color: #212529; } 
-#chatPage .roomWrap .search_form { width: calc(100% - 30px); border-bottom: 1px solid #949494; padding-bottom: 5px; } 
-#chatPage .roomWrap .search_form:focus { border-bottom: 1px solid #949494 !important; } 
 #chatPage .roomWrap .roomBox { margin-top: 20px; } 
 #chatPage .roomWrap .roomBox.direct-view .directChat { display: block; } 
 #chatPage .roomWrap .roomBox.direct-view .openChat,
 #chatPage .roomWrap .roomBox .directChat { display: none; } 
 
-#chatPage .chat { padding-right: 30px; max-height: 500px; overflow-y: auto; } 
+#chatPage .chat { max-height: 500px; overflow-y: auto; } 
 #chatPage .chat .chat_item { opacity:0.7; display: flex; border-radius: 5px; background: #edf2fb; margin-bottom: 10px; cursor: pointer; padding: 10px; transition: opacity .3s, background .3s; } 
 #chatPage .chat .chat_item:hover { opacity: 1; } 
 #chatPage .openChat .chat_item.active { background: #0077b6; } 
