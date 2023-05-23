@@ -20,7 +20,7 @@ export class MainPanel extends Component {
       <div className='mainPanel'>
         <TalkHeader searchTerm={searchTerm} handleChangeSearchTerm={this.handleChangeSearchTerm} currentChatRoom={chatRoom}/>
         <TalkBody />
-        <TalkForm />
+        <TalkForm chatRoom={chatRoom}/>
       </div>
     )
   }
