@@ -4,7 +4,8 @@ import DirectChat from './DirectChat';
 import { connect } from 'react-redux';
 import { getDatabase, ref, push, update, child, onChildAdded, onValue } from 'firebase/database';
 import { preventSymbol } from '../../../utils/utils';
-import { BsSearch } from 'react-icons/bs'
+import { BsSearch } from 'react-icons/bs';
+import { setCurrentChatRoom, setPrivateChatRoom } from '../../../redux/actions/chatRoom_action';
 export class Roomwrap extends Component {
   state = {
     chatRoomsRef: ref(getDatabase(), 'chatRooms'),
@@ -12,7 +13,9 @@ export class Roomwrap extends Component {
     chatRooms: [],
     users: [],
     searchTerm: "",
-    isRender: 0
+    isRender: 0,
+    activeChatRoomId: "",
+    firstLoad: true
   } 
 
   componentDidMount() {
@@ -22,12 +25,24 @@ export class Roomwrap extends Component {
     }
   }
 
+  setFirstChatRoom = () => {
+    const { firstLoad, chatRooms } = this.state;
+    if (firstLoad && chatRooms.length > 0) {
+      const firstChatRoom = chatRooms[0];
+      this.props.dispatch(setCurrentChatRoom(firstChatRoom));
+      this.setState({ firstLoad: false });
+      this.setState({ activeChatRoomId: firstChatRoom.id });
+    }
+  }
+
   AddChatRoomsListener = () => {
     let chatRoomsArray = [];
     
     onChildAdded(this.state.chatRoomsRef, DataSnapshot => {
       chatRoomsArray.push(DataSnapshot.val());
-      this.setState({ chatRooms: chatRoomsArray, isRender: this.state.isRender + 1 });
+      this.setState({ chatRooms: chatRoomsArray, isRender: this.state.isRender + 1 }, () => {
+        this.setFirstChatRoom();
+      });
     });
   }
 
@@ -55,6 +70,12 @@ export class Roomwrap extends Component {
       roomBox.classList.remove('direct-view')
     }
     this.renderSearchResult();
+  }
+
+  handleActiveChatRoom = (room, isPrivateChatRoom) => {
+    this.props.dispatch(setCurrentChatRoom(room));
+    this.props.dispatch(setPrivateChatRoom(isPrivateChatRoom));
+    this.setState({ activeChatRoomId: room.id });
   }
 
   handleSearchTalk = (e) => {
@@ -92,7 +113,7 @@ export class Roomwrap extends Component {
   }
 
   render() {
-    const { chatRooms, users, isRender, searchTerm } = this.state;
+    const { chatRooms, users, isRender, searchTerm, activeChatRoomId } = this.state;
     return (
       <div className='roomWrap'>
       <div className='tab_wrapper'>
@@ -105,7 +126,7 @@ export class Roomwrap extends Component {
       </div>
       <div className='roomBox'>
         <div ref={(ref) => { this.openChat = ref }}>
-          <OpenChat chatRooms={chatRooms} isRender={isRender}/>
+          <OpenChat chatRooms={chatRooms} isRender={isRender} handleActiveChatRoom={this.handleActiveChatRoom} activeChatRoomId={activeChatRoomId}/>
         </div>
         <div ref={(ref) => { this.directChat = ref }}>
           <DirectChat users={users} />
@@ -119,6 +140,7 @@ export class Roomwrap extends Component {
 const mapStateToProps = state => {
   return {
     me: state.user_reducer.currentUser,
+    chatRoom: state.chatRoom_reducer.currentChatRoom
   }
 } 
 

@@ -2,7 +2,6 @@ import React, { memo } from 'react';
 import defaultProfile from '../../../utils/images/default_profile.png';
 
 const DirectChat = ({users}) => {
-  console.log(111);
   const renderUsers = (chatUsers) =>
     chatUsers.length > 0 &&
     chatUsers.map(chatUser => (

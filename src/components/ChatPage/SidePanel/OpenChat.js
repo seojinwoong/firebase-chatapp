@@ -3,13 +3,15 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 import defaultProfile from '../../../utils/images/default_profile.png';
 
-const OpenChat = ({chatRooms, isRender}) => {
-  const now = new Date();
+const OpenChat = ({chatRooms, isRender, activeChatRoomId, handleActiveChatRoom}) => {
 
   const renderChatRooms = (rooms) =>
     rooms.length > 0 &&
     rooms.map(room => (
-      <div className='chat_item open_chat_item' key={room.id}>
+      <div 
+        className={`${activeChatRoomId === room.id && 'active'} chat_item open_chat_item`} 
+        key={room.id} 
+        onClick={() => {handleActiveChatRoom(room, false)}}>
         <OverlayTrigger 
           placement="top" 
           overlay={
@@ -18,7 +20,7 @@ const OpenChat = ({chatRooms, isRender}) => {
             </Tooltip>
           }
         >
-          <img className="profile-thumb" src={room.createdBy.image + `?v=${now.getTime()}` || defaultProfile} alt="프로필이미지"/>
+          <img className="profile-thumb" src={room.createdBy.image || defaultProfile} alt="프로필이미지"/>
         </OverlayTrigger>
         <div>
           <p className="chat_tit">{room.name}</p>
