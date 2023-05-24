@@ -1,25 +1,58 @@
 import React, { Component } from 'react';
 import TalkHeader from './TalkHeader';
-import TalkBody from './TalkBody';
+import Message from './Message';
 import TalkForm from './TalkForm';
 import { connect } from 'react-redux';
+import { getDatabase, ref, onChildAdded, onChildRemoved, child, off, DataSnapshot } from 'firebase/database';
 export class MainPanel extends Component {
   state = {
-    searchTerm: ""
+    searchTerm: "",
+    messages: [],
+    messagesRef: ref(getDatabase(), 'messages'),
+  }
+
+  componentDidMount() {
+    const { chatRoom } = this.props;
+
+    if (chatRoom) {
+      this.addMessagesListeners(chatRoom.id);
+    }
   }
 
   handleChangeSearchTerm = (value) => {
     this.setState({ searchTerm: value });
   }
 
+  addMessagesListeners = (chatRoomId) => {
+    let messagesArr = [];
+    let { messagesRef } = this.state;
+
+    onChildAdded(child(messagesRef, chatRoomId), DataSnapshot => {
+      messagesArr.push(DataSnapshot.val());
+      this.setState({
+        messages: messagesArr,
+      });
+    })
+  }
+
+  renderMessages = (messages) => 
+    messages.length > 0 &&
+    messages.map(message => (
+      <Message key={message.timestamp} message={message} me={this.props.me}/>
+    ))
+
   render() {
-    const { searchTerm } = this.state;
+    const { searchTerm, messages } = this.state;
     const { chatRoom } = this.props;
 
     return (
       <div className='mainPanel'>
         <TalkHeader searchTerm={searchTerm} handleChangeSearchTerm={this.handleChangeSearchTerm} currentChatRoom={chatRoom}/>
-        <TalkBody />
+
+        <div className='talkBody'>
+          { this.renderMessages(messages) }
+        </div>
+
         <TalkForm chatRoom={chatRoom}/>
       </div>
     )
@@ -28,6 +61,7 @@ export class MainPanel extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    me: state.user_reducer.currentUser,
     chatRoom: state.chatRoom_reducer.currentChatRoom
   }
 }

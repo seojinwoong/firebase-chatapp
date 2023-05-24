@@ -62,7 +62,7 @@
 #chatPage .search_term_wrap .ico { background: var(--main-color); color: #fff; font-size: 22px; position: absolute; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; } 
 #chatPage .search_term { position: absolute; width: calc(100% - 40px); left: 40px; height: 100%; background: #fff; padding: 0 10px; } 
 
-#chatPage .talkBody { padding: 30px 50px; overflow-x: hidden; overflow-y: auto; height: 42.5vw; min-height: 836px; } 
+#chatPage .talkBody { padding: 30px 50px; overflow-x: hidden; overflow-y: auto; height: 700px;} 
 #chatPage .talkBody .chat_user { display: flex; align-items: center; } 
 #chatPage .talkBody .chat_user .chat_thumb { width: 30px; height: 30px; } 
 #chatPage .talkBody .chat_user .chat_user_name { margin-bottom: 0; margin-left: 10px; font-size: 16px; font-weight: bold; } 
