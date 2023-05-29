@@ -39,8 +39,18 @@ const TalkForm = ({chatRoom}) => {
     }
   }
 
+  const isContinuous = () => {
+    const lastMessage = document.querySelector('.last_message');
+    if (lastMessage) {
+      return me.uid === lastMessage.dataset.messageid ? false : true; 
+    } else {
+      return true;
+    }
+  }
+
   const createMessage = (fileUrl = null) => {
     const message = {
+      isProfileView: isContinuous(),
       timestamp: "" + new Date(),
       userId: me.uid,
       userName: me.displayName,

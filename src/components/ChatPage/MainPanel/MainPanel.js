@@ -37,9 +37,13 @@ export class MainPanel extends Component {
 
   renderMessages = (messages) => 
     messages.length > 0 &&
-    messages.map(message => (
-      <Message key={message.timestamp} message={message} me={this.props.me}/>
-    ))
+    messages.map((message, i, row) => {
+      if (i === row.length - 1 ) {
+          return <Message key={message.timestamp} message={message} me={this.props.me} isLastMessage={true} />
+        } else {
+          return <Message key={message.timestamp} message={message} me={this.props.me} isLastMessage={false} />
+      }
+    })
 
   render() {
     const { searchTerm, messages } = this.state;

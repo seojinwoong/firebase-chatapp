@@ -1,7 +1,7 @@
 import React from 'react';
 import defaultProfile from '../../../utils/images/default_profile.png';
 
-const Message = ({message, me}) => {
+const Message = ({message, me, isLastMessage}) => {
   const isImage = (message) => {
     return message.hasOwnProperty('image') && !message.hasOwnProperty('content');
   }
@@ -10,14 +10,19 @@ const Message = ({message, me}) => {
   return (
     <>
         {
-          message.userId !== me.uid
+          message.userId !== me.uid && message.isProfileView
           ? <div className="chat_user">
               <img src={message ? message.userPhoto : defaultProfile} alt="프로필 사진" className='profile-thumb chat_thumb'/>
               <p className="chat_user_name">{message && message.userName}</p>
             </div>
           : null
         }
-        <div className={`message_item_wrap ${isMineMessage(message.userId, me.uid)}`}>
+        <div 
+        data-messageid={message.userId}
+        className={`
+            message_item_wrap ${isMineMessage(message.userId, me.uid)}
+            ${isLastMessage ? 'last_message' : ''}
+        `}>
           <div className="message_item">
               {
                 isImage(message)

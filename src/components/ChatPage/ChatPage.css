@@ -70,8 +70,7 @@
 #chatPage .talkBody .message_item_wrap .message_item .text { box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; background: #fff; border-radius: 5px; padding: 5px; margin-bottom: 0; } 
 #chatPage .talkBody .message_item_wrap .message_item img { box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; border-radius: 5px; max-width: 500px; } 
 #chatPage .talkBody .message_item_wrap .message_item .time { margin-bottom: 0; flex-shrink: 0; color: #85878d; margin-left: 5px; font-size: 14px; } 
-#chatPage .talkBody .message_item_wrap + .chat_user, 
-#chatPage .talkBody .message_item_wrap + .my_chat { margin-top: 15px; } 
+#chatPage .talkBody .message_item_wrap + .chat_user  { margin-top: 15px; } 
 
 #chatPage .talkBody .message_item_wrap.my_chat { display: flex; flex-direction: column; align-items: flex-end; } 
 #chatPage .talkBody .message_item_wrap.my_chat .message_item { flex-direction: row-reverse; margin-top: 8px; } 
