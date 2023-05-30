@@ -1,14 +1,17 @@
 import React from 'react';
+import moment from 'moment';
+import 'moment/locale/ko';
 import defaultProfile from '../../../utils/images/default_profile.png';
 
 const Message = ({message, me, isLastMessage}) => {
+  const timeFromNow = timestamp => moment(timestamp).fromNow();
   const isImage = (message) => {
     return message.hasOwnProperty('image') && !message.hasOwnProperty('content');
   }
   const isMineMessage = (messageId, currentUserId) => messageId === currentUserId ? "my_chat" : "";
   
   return (
-    <>
+    <div>
         {
           message.userId !== me.uid && message.isProfileView
           ? <div className="chat_user">
@@ -29,10 +32,10 @@ const Message = ({message, me, isLastMessage}) => {
                 ? <img src={message.image} alt="업로드 이미지"/>
                 : <p className='text'>{message.content}</p>
               }
-            <p className='time'>오후 2:51</p>
+            <p className='time'>{timeFromNow(message.timestamp)}</p>
           </div>
         </div>
-    </>
+    </div>
   )
 }
 

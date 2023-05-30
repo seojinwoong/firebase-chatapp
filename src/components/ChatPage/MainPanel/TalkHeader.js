@@ -1,16 +1,52 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 import defaultProfile from '../../../utils/images/default_profile.png';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai'
 import { BsSearch } from 'react-icons/bs';
+import { useSelector } from 'react-redux';
+import { onValue, child, getDatabase, ref, remove, update } from 'firebase/database';
 
 const TalkHeader = ({searchTerm, handleChangeSearchTerm, currentChatRoom}) => {
+  const chatRoom = useSelector(state => state.chatRoom_reducer.currentChatRoom);
+  const me = useSelector(state => state.user_reducer.currentUser);
+  const usersRef = ref(getDatabase(), 'users');
   const [isSearchTermView, setIsSearchTermView] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  useEffect(() => {
+    if (chatRoom && me) {
+      addFavoriteListener(chatRoom.id, me.uid);
+    }
+  }, []);
+
+  const addFavoriteListener = (chatRoomId, userId) => {
+    onValue(child(usersRef, `${userId}/favorited`), data => {
+      if (data.val() !== null) {
+      }
+    });
+  }
+
+  const handleFavorite = () => {
+    if (isFavorite) {
+      setIsFavorite(prev => !prev);
+      remove(child(usersRef, `${me.uid}/favorited/${chatRoom.id}`));
+    } else {
+      setIsFavorite(prev => !prev);
+      update(child(usersRef, `${me.uid}/favorited`), {
+        [chatRoom.id]: {
+          name: chatRoom.name,
+          description: chatRoom.description,
+          creatorName: chatRoom.createdBy.name
+        }
+      })
+    }
+  }
 
   const handleChange = (e) => {
     handleChangeSearchTerm(e.target.value);
   }
+
   const handleToggleSearchBar = () => {
     setIsSearchTermView(prev => !prev);
     if (isSearchTermView) handleChangeSearchTerm(""); 
@@ -36,7 +72,13 @@ const TalkHeader = ({searchTerm, handleChangeSearchTerm, currentChatRoom}) => {
           </div>
         </div>
         <div className='right_section'>
-          <span className='badge like'><AiOutlineHeart /></span>
+          <span className='badge like' onClick={handleFavorite}>
+            {
+              isFavorite
+              ? <AiFillHeart />
+              : <AiOutlineHeart />
+            }
+          </span>
           <span className='badge' onClick={handleToggleSearchBar}><BsSearch /></span>
         </div>
       </div>
@@ -44,7 +86,7 @@ const TalkHeader = ({searchTerm, handleChangeSearchTerm, currentChatRoom}) => {
         isSearchTermView 
         && <div className='search_term_wrap'>
             <span className='ico'><BsSearch/></span>
-            <input type="text" className='search_term' value={searchTerm} onChange={handleChange}/>
+            <input type="text" className='search_term' value={searchTerm} onChange={handleChange} placeholder='메세지 검색'/>
           </div>
       }
     </div>

@@ -5,8 +5,12 @@ import TalkForm from './TalkForm';
 import { connect } from 'react-redux';
 import { getDatabase, ref, onChildAdded, onChildRemoved, child, off, DataSnapshot } from 'firebase/database';
 export class MainPanel extends Component {
+
+  messageEndRef = React.createRef();
+
   state = {
     searchTerm: "",
+    searchResults: [],
     messages: [],
     messagesRef: ref(getDatabase(), 'messages'),
   }
@@ -19,8 +23,31 @@ export class MainPanel extends Component {
     }
   }
 
+  componentDidUpdate() {
+    if (this.messageEndRef) {
+      this.messageEndRef.scrollIntoView();
+    }
+  }
+
+  handleSearchMessages = () => {
+    const chatRoomMessages = [...this.state.messages];
+    const regex = new RegExp(this.state.searchTerm, "gi");
+    const searchResults = chatRoomMessages.reduce((acc, message) => {
+      if (
+        (message.content && message.content.match(regex)) ||
+        message.userName.match(regex)
+      ) {
+        acc.push(message);
+      }
+      return acc;
+    }, []);
+    this.setState({ searchResults });
+  }
+
   handleChangeSearchTerm = (value) => {
-    this.setState({ searchTerm: value });
+    this.setState({ 
+      searchTerm: value 
+    }, () => this.handleSearchMessages());
   }
 
   addMessagesListeners = (chatRoomId) => {
@@ -36,7 +63,7 @@ export class MainPanel extends Component {
   }
 
   renderMessages = (messages) => 
-    messages.length > 0 &&
+    messages.length > 0 && this.props.me && 
     messages.map((message, i, row) => {
       if (i === row.length - 1 ) {
           return <Message key={message.timestamp} message={message} me={this.props.me} isLastMessage={true} />
@@ -46,7 +73,7 @@ export class MainPanel extends Component {
     })
 
   render() {
-    const { searchTerm, messages } = this.state;
+    const { searchTerm, messages, searchResults } = this.state;
     const { chatRoom } = this.props;
 
     return (
@@ -54,7 +81,12 @@ export class MainPanel extends Component {
         <TalkHeader searchTerm={searchTerm} handleChangeSearchTerm={this.handleChangeSearchTerm} currentChatRoom={chatRoom}/>
 
         <div className='talkBody'>
-          { this.renderMessages(messages) }
+          { 
+            searchTerm 
+            ? this.renderMessages(searchResults)
+            : this.renderMessages(messages) 
+          }
+          <div ref={node => (this.messageEndRef = node)} />
         </div>
 
         <TalkForm chatRoom={chatRoom}/>
