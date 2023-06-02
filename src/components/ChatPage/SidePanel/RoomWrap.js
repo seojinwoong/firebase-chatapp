@@ -13,7 +13,6 @@ export class Roomwrap extends Component {
     chatRooms: [],
     users: [],
     searchTerm: "",
-    isRender: 0,
     activeChatRoomId: "",
     firstLoad: true
   } 
@@ -40,7 +39,7 @@ export class Roomwrap extends Component {
     
     onChildAdded(this.state.chatRoomsRef, DataSnapshot => {
       chatRoomsArray.push(DataSnapshot.val());
-      this.setState({ chatRooms: chatRoomsArray, isRender: this.state.isRender + 1 }, () => {
+      this.setState({ chatRooms: chatRoomsArray }, () => {
         this.setFirstChatRoom();
       });
     });
@@ -52,7 +51,7 @@ export class Roomwrap extends Component {
       for (const [key, value] of Object.entries(DataSnapshot.val())) {
         if (meId !== key) {
           usersArray.push({...value, uid: key});
-          this.setState({ users: usersArray, isRender: this.state.isRender + 1 });
+          this.setState({ users: usersArray });
         }
       } 
     });
@@ -72,10 +71,27 @@ export class Roomwrap extends Component {
     this.renderSearchResult();
   }
 
+  getDirectChatRoomId = (opositeUserId) => {
+    const meId = this.props.me.uid;
+    return meId > opositeUserId ? `${meId}/${opositeUserId}` : `${opositeUserId}/${meId}`;
+  }
+
   handleActiveChatRoom = (room, isPrivateChatRoom) => {
-    this.props.dispatch(setCurrentChatRoom(room));
-    this.props.dispatch(setPrivateChatRoom(isPrivateChatRoom));
-    this.setState({ activeChatRoomId: room.id });
+    if (isPrivateChatRoom) {
+      const chatRoomId = this.getDirectChatRoomId(room.uid);
+      const chatRoomData = {
+        id: chatRoomId,
+        name: room.name,
+        image: room.image
+      }
+      this.props.dispatch(setCurrentChatRoom(chatRoomData));
+      this.props.dispatch(setPrivateChatRoom(isPrivateChatRoom));
+      this.setState({ activeChatRoomId: room.uid });
+    } else {
+      this.props.dispatch(setCurrentChatRoom(room));
+      this.props.dispatch(setPrivateChatRoom(isPrivateChatRoom));
+      this.setState({ activeChatRoomId: room.id });
+    }
   }
 
   handleSearchTalk = (e) => {
@@ -113,7 +129,7 @@ export class Roomwrap extends Component {
   }
 
   render() {
-    const { chatRooms, users, isRender, searchTerm, activeChatRoomId } = this.state;
+    const { chatRooms, users, searchTerm, activeChatRoomId } = this.state;
     return (
       <div className='roomWrap'>
       <div className='tab_wrapper'>
@@ -126,10 +142,10 @@ export class Roomwrap extends Component {
       </div>
       <div className='roomBox'>
         <div ref={(ref) => { this.openChat = ref }}>
-          <OpenChat chatRooms={chatRooms} isRender={isRender} handleActiveChatRoom={this.handleActiveChatRoom} activeChatRoomId={activeChatRoomId}/>
+          <OpenChat chatRooms={chatRooms} handleActiveChatRoom={this.handleActiveChatRoom} activeChatRoomId={activeChatRoomId}/>
         </div>
         <div ref={(ref) => { this.directChat = ref }}>
-          <DirectChat users={users} />
+          <DirectChat users={users} handleActiveChatRoom={this.handleActiveChatRoom} activeChatRoomId={activeChatRoomId}/>
         </div>
       </div>
     </div>

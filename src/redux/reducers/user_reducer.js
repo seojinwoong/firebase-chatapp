@@ -1,11 +1,13 @@
 import {
     SET_USER,
-    CLEAR_USER
+    CLEAR_USER,
+    DO_RENDER
 } from '../actions/types';
 
 const initialUserState = {
     currentUser: null,
-    isLoading: true
+    isLoading: true,
+    renderCounts: 0
 }
 
 export default function (state = initialUserState, action) {
@@ -21,6 +23,11 @@ export default function (state = initialUserState, action) {
                 ...state,
                 currentUser: null,
                 isLoading: false
+            }
+        case DO_RENDER:
+            return {
+                ...state,
+                renderCounts: state.renderCounts + 1
             }
         default: 
             return state;

@@ -4,6 +4,7 @@ import Message from './Message';
 import TalkForm from './TalkForm';
 import { connect } from 'react-redux';
 import { getDatabase, ref, onChildAdded, onChildRemoved, child, off, DataSnapshot } from 'firebase/database';
+import { FiAlertTriangle } from 'react-icons/fi';
 export class MainPanel extends Component {
 
   messageEndRef = React.createRef();
@@ -16,16 +17,20 @@ export class MainPanel extends Component {
   }
 
   componentDidMount() {
-    const { chatRoom } = this.props;
+    const { chatRoom, isPrivateChatRoom } = this.props;
 
     if (chatRoom) {
-      this.addMessagesListeners(chatRoom.id);
+     this.addMessagesListeners(chatRoom.id);
     }
   }
 
   componentDidUpdate() {
     if (this.messageEndRef) {
-      this.messageEndRef.scrollIntoView();
+      const offsetY = this.messageEndRef.getBoundingClientRect().top;
+      document.querySelector('.talkBody').scrollBy({
+        top: offsetY,
+        behavior: 'smooth'
+      });
     }
   }
 
@@ -78,18 +83,28 @@ export class MainPanel extends Component {
 
     return (
       <div className='mainPanel'>
-        <TalkHeader searchTerm={searchTerm} handleChangeSearchTerm={this.handleChangeSearchTerm} currentChatRoom={chatRoom}/>
-
-        <div className='talkBody'>
-          { 
-            searchTerm 
-            ? this.renderMessages(searchResults)
-            : this.renderMessages(messages) 
-          }
-          <div ref={node => (this.messageEndRef = node)} />
-        </div>
-
-        <TalkForm chatRoom={chatRoom}/>
+        {
+          chatRoom
+          ? 
+          <>
+            <TalkHeader searchTerm={searchTerm} handleChangeSearchTerm={this.handleChangeSearchTerm} currentChatRoom={chatRoom}/>
+            <div className='talkBody'>
+                { 
+                  searchTerm 
+                  ? this.renderMessages(searchResults)
+                  : this.renderMessages(messages) 
+                }
+                <div className="boxes" ref={node => (this.messageEndRef = node)} />
+            </div>
+            <TalkForm chatRoom={chatRoom}/>
+          </>
+          : 
+          <div className='no_chat_data'>
+              <FiAlertTriangle />
+              활성화된 채팅방이 없습니다!
+          </div>
+        }
+        
       </div>
     )
   }
@@ -98,7 +113,8 @@ export class MainPanel extends Component {
 const mapStateToProps = (state) => {
   return {
     me: state.user_reducer.currentUser,
-    chatRoom: state.chatRoom_reducer.currentChatRoom
+    chatRoom: state.chatRoom_reducer.currentChatRoom,
+    isPrivateChatRoom: state.chatRoom_reducer.isPrivateChatRoom
   }
 }
 

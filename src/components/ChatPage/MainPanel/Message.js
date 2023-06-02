@@ -15,7 +15,7 @@ const Message = ({message, me, isLastMessage}) => {
         {
           message.userId !== me.uid && message.isProfileView
           ? <div className="chat_user">
-              <img src={message ? message.userPhoto : defaultProfile} alt="프로필 사진" className='profile-thumb chat_thumb'/>
+              <img src={message?.userPhoto || defaultProfile} alt="프로필 사진" className='profile-thumb chat_thumb'/>
               <p className="chat_user_name">{message && message.userName}</p>
             </div>
           : null

@@ -1,10 +1,12 @@
-import React, { memo } from 'react';
+import React, { useEffect, memo } from 'react';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 import defaultProfile from '../../../utils/images/default_profile.png';
+import { useSelector } from 'react-redux';
 
-const OpenChat = ({chatRooms, isRender, activeChatRoomId, handleActiveChatRoom}) => {
-
+const OpenChat = ({chatRooms, activeChatRoomId, handleActiveChatRoom}) => {
+  const renderCounts = useSelector(state => state.user_reducer.renderCounts);
+  
   const renderChatRooms = (rooms) =>
     rooms.length > 0 &&
     rooms.map(room => (
@@ -20,7 +22,7 @@ const OpenChat = ({chatRooms, isRender, activeChatRoomId, handleActiveChatRoom})
             </Tooltip>
           }
         >
-          <img className="profile-thumb" src={room.createdBy.image || defaultProfile} alt="프로필이미지"/>
+          <img className="profile-thumb" src={`${room.createdBy.image}?v=${renderCounts}` || defaultProfile} alt="프로필이미지"/>
         </OverlayTrigger>
         <div>
           <p className="chat_tit">{room.name}</p>

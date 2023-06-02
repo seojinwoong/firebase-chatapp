@@ -5,7 +5,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import { getAuth, signOut, updateProfile } from 'firebase/auth';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getStorage, uploadBytesResumable, ref as strRef, getDownloadURL } from 'firebase/storage';
 import { getDatabase, ref, update, onChildAdded, child, push } from 'firebase/database';
 import CustomLoading from '../../../utils/components/CustomLoading'; 
@@ -13,10 +13,12 @@ import CustomToast from '../../../utils/components/CustomToast';
 import { useTransition, animated } from 'react-spring';
 import { defaultAnimation } from '../../../utils/ToastAnimation'; 
 import useInput from '../../../utils/hooks/useInput';
+import { doRender } from '../../../redux/actions/user_action';
 
 let timer;
 
 const MyInfo = () => {
+  const dispatch = useDispatch();
   const auth = getAuth();
   const me = useSelector(state => state.user_reducer.currentUser);
   const [modalShow, setModalShow] = useState(false);
@@ -74,6 +76,7 @@ const MyInfo = () => {
           });
 
           update(ref(getDatabase(), `users/${me.uid}`), {image: downloadURL});
+          dispatch(doRender());
         })
       });
       setUploadResult({txt: "프로필 사진 변경 완료!", status: 'success'});
