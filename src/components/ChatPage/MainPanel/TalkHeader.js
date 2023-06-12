@@ -22,10 +22,13 @@ const TalkHeader = ({searchTerm, handleChangeSearchTerm, currentChatRoom}) => {
       addFavoriteListener(chatRoom.id, me.uid);
     }
   }, []);
-
+  
   const addFavoriteListener = (chatRoomId, userId) => {
     onValue(child(usersRef, `${userId}/favorited`), data => {
       if (data.val() !== null) {
+        const chatRoomIds = Object.keys(data.val());
+        const isAlreadyFavorited = chatRoomIds.includes(chatRoomId);
+        setIsFavorite(isAlreadyFavorited);
       }
     });
   }
@@ -41,19 +44,14 @@ const TalkHeader = ({searchTerm, handleChangeSearchTerm, currentChatRoom}) => {
           name: chatRoom.name,
           description: chatRoom.description,
           creatorName: chatRoom.createdBy.name,
-          creatorImage: chatRoom.createdBy.image
+          creatorImage: chatRoom.createdBy?.image || ""
         }
       })
     }
   }
 
-  const handleChange = (e) => {
-    handleChangeSearchTerm(e.target.value);
-  }
-
   const handleToggleSearchBar = () => {
     setIsSearchTermView(prev => !prev);
-    if (isSearchTermView) handleChangeSearchTerm(""); 
   }
 
   return (
@@ -90,13 +88,16 @@ const TalkHeader = ({searchTerm, handleChangeSearchTerm, currentChatRoom}) => {
             : <div className='mini-badge-wrap'><span className='mini-badge opentalk'><HiUserGroup /></span> <span className='txt'>공개톡</span></div>
           }
           <div>
-            <span className='badge like' onClick={handleFavorite}>
-              {
-                isFavorite
-                ? <AiFillHeart />
-                : <AiOutlineHeart />
-              }
-            </span>
+            {
+              !isPrivateChatRoom &&
+              <span className='badge like' onClick={handleFavorite}>
+                {
+                  isFavorite
+                  ? <AiFillHeart />
+                  : <AiOutlineHeart />
+                }
+              </span>
+            }
             <span className='badge' onClick={handleToggleSearchBar}><BsSearch /></span>
           </div>
         </div>
@@ -105,7 +106,7 @@ const TalkHeader = ({searchTerm, handleChangeSearchTerm, currentChatRoom}) => {
         isSearchTermView 
         && <div className='search_term_wrap'>
             <span className='ico'><BsSearch/></span>
-            <input type="text" className='search_term' value={searchTerm} onChange={handleChange} placeholder='메세지 OR 작성자 검색'/>
+            <input type="text" className='search_term' value={searchTerm} onChange={handleChangeSearchTerm} placeholder='메세지 OR 작성자 검색'/>
           </div>
       }
     </div>

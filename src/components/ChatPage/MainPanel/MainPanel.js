@@ -49,9 +49,9 @@ export class MainPanel extends Component {
     this.setState({ searchResults });
   }
 
-  handleChangeSearchTerm = (value) => {
+  handleChangeSearchTerm = (e) => {
     this.setState({ 
-      searchTerm: value 
+      searchTerm: e.target.value 
     }, () => this.handleSearchMessages());
   }
 
