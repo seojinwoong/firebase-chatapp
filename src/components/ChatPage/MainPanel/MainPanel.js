@@ -7,30 +7,81 @@ import { getDatabase, ref, onChildAdded, onChildRemoved, child, off, DataSnapsho
 import { FiAlertTriangle } from 'react-icons/fi';
 export class MainPanel extends Component {
 
-  messageEndRef = React.createRef();
-
   state = {
     searchTerm: "",
     searchResults: [],
     messages: [],
     messagesRef: ref(getDatabase(), 'messages'),
+    typingRef: ref(getDatabase(), 'typing'),
+    typingUsers: [],
+    listenerLists: []
   }
 
   componentDidMount() {
-    const { chatRoom, isPrivateChatRoom } = this.props;
+    const { chatRoom } = this.props;
 
     if (chatRoom) {
      this.addMessagesListeners(chatRoom.id);
+     this.addTypingListeners(chatRoom.id);
     }
   }
 
+  componentWillUnmount() {
+    off(this.state.messagesRef);
+  }
+
   componentDidUpdate() {
-    if (this.messageEndRef) {
-      const offsetY = this.messageEndRef.getBoundingClientRect().top;
+    if (document.querySelector('#btmBox')) {
+      const offsetY = document.querySelector('#btmBox').getBoundingClientRect().top;
       document.querySelector('.talkBody').scrollBy({
         top: offsetY,
         behavior: 'smooth'
       });
+    }
+  }
+
+  addTypingListeners = (chatRoomId) => {
+    let typingUsers = [];
+
+    let { typingRef } = this.state;
+
+    onChildAdded(child(typingRef, chatRoomId), DataSnapshot => {
+      if (DataSnapshot.key !== this.props.me.uid) {
+        typingUsers = typingUsers.concat({
+          id: DataSnapshot.key,
+          name: DataSnapshot.val()
+        });
+        this.setState({ typingUsers });
+      }
+    });
+
+    this.addToListenerLists(chatRoomId, this.state.typingRef, 'child_added');
+    
+    onChildRemoved(child(typingRef, chatRoomId), DataSnapshot => {
+      const index = typingUsers.findIndex(user => user.id === DataSnapshot.key);
+      if (index !== -1) {
+        typingUsers = typingUsers.filter(user => user.id !== DataSnapshot.key);
+        this.setState({ typingUsers });
+      }
+    });
+
+    this.addToListenerLists(chatRoomId, this.state.typingRef, 'child_removed');
+  }
+
+  addToListenerLists = (id, ref, event) => {
+    const index = this.state.listenerLists.findIndex(listener => {
+      return (
+        listener.id === id &&
+        listener.ref === ref &&
+        listener.event === event
+      )
+    });
+
+    if (index === -1) {
+      const newListener = {id, ref, event};
+      this.setState({
+        listenerLists: this.state.listenerLists.concat(newListener)
+      })
     }
   }
 
@@ -62,7 +113,7 @@ export class MainPanel extends Component {
     onChildAdded(child(messagesRef, chatRoomId), DataSnapshot => {
       messagesArr.push(DataSnapshot.val());
       this.setState({
-        messages: messagesArr,
+        messages: messagesArr
       });
     })
   }
@@ -77,8 +128,17 @@ export class MainPanel extends Component {
       }
     })
 
+    renderTypingUsers = (typingUsers) => 
+      typingUsers.length > 0 &&
+      typingUsers.map(user => (   
+        <div className='typing_loader_wrap'>
+            <div className='typing_user'>{user.name.userName.substr(0, 2)}</div>
+            <div className='typing_loader'></div>
+        </div>
+    ))
+
   render() {
-    const { searchTerm, messages, searchResults } = this.state;
+    const { searchTerm, messages, searchResults, typingUsers } = this.state;
     const { chatRoom } = this.props;
 
     return (
@@ -94,8 +154,9 @@ export class MainPanel extends Component {
                   ? this.renderMessages(searchResults)
                   : this.renderMessages(messages) 
                 }
-                <div className="boxes" ref={node => (this.messageEndRef = node)} />
+                <div id="btmBox" />
             </div>
+            {this.renderTypingUsers(typingUsers)}
             <TalkForm chatRoom={chatRoom}/>
           </>
           : 
@@ -114,7 +175,6 @@ const mapStateToProps = (state) => {
   return {
     me: state.user_reducer.currentUser,
     chatRoom: state.chatRoom_reducer.currentChatRoom,
-    isPrivateChatRoom: state.chatRoom_reducer.isPrivateChatRoom
   }
 }
 

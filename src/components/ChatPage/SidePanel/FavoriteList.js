@@ -5,7 +5,6 @@ import {TbHeartOff} from 'react-icons/tb';
 import { connect } from 'react-redux';
 import { remove, child, getDatabase, ref, onChildAdded, onChildRemoved, off } from 'firebase/database';
 import { setCurrentChatRoom, setPrivateChatRoom } from '../../../redux/actions/chatRoom_action';
-import { doRender } from '../../../redux/actions/user_action';
 
 export class FavoriteList extends Component {
   state = {
@@ -63,7 +62,6 @@ export class FavoriteList extends Component {
     const { user } = this.props;
     
     remove(child(userRef, `${user.uid}/favorited/${chatRoomId}`));
-    this.props.dispatch(doRender());
   }
 
   render() {
@@ -88,7 +86,6 @@ export class FavoriteList extends Component {
                   <span className='badge off_like' onClick={() => this.handleOffFavorite(chatRoom.id)}><TbHeartOff /></span>
                 </div>
               </div>
-              {console.log('asdasdsa', JSON.stringify(chatRoom, null, 2))}
             </li>
           ))
         }

@@ -22,7 +22,7 @@ const OpenChat = ({chatRooms, activeChatRoomId, handleActiveChatRoom}) => {
             </Tooltip>
           }
         >
-          <img className="profile-thumb" src={`${room.createdBy.image}?v=${renderCounts}` || defaultProfile} alt="프로필이미지"/>
+          <img className="profile-thumb" src={room.createdBy.image === "default image" ? defaultProfile : `${room.createdBy.image}?v=${renderCounts}`} alt="프로필이미지"/>
         </OverlayTrigger>
         <div>
           <p className="chat_tit">{room.name}</p>

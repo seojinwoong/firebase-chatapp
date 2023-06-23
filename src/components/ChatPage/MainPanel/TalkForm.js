@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 import { RiSendPlaneFill } from 'react-icons/ri';
 import { BiImageAdd } from 'react-icons/bi';
@@ -24,6 +24,17 @@ const TalkForm = ({chatRoom}) => {
   const [talkCon, setTalkCon] = useState('');
   const transition = useTransition(uploadResult, defaultAnimation);
   const messagesRef = ref(getDatabase(), 'messages');
+  const typingRef = ref(getDatabase(), 'typing');
+
+  const handleUnload = () => {
+    remove(ref(getDatabase(), `typing/${chatRoom.id}/${me.uid}`));
+  }
+  
+  useEffect(() => {
+    window.addEventListener("beforeunload", handleUnload);
+    return () => window.removeEventListener("beforeunload", handleUnload);
+  }, [handleUnload]);
+
 
   const handleShowUploadRef = () => {
     uploadImageRef.current.click();
@@ -37,7 +48,19 @@ const TalkForm = ({chatRoom}) => {
     if (e.ctrlKey && e.keyCode == 13 ) {
       handleSubmit();
     }
+
+    if (talkCon) {
+      set(ref(getDatabase(), `typing/${chatRoom.id}/${me.uid}`), {
+        userName: me.displayName
+      })
+    } else {
+      remove(ref(getDatabase(), `typing/${chatRoom.id}/${me.uid}`));
+    }
   }
+
+  useEffect(() => {
+
+  }, []);
 
   const isContinuous = () => {
     const lastMessage = document.querySelector('.last_message');
@@ -54,7 +77,6 @@ const TalkForm = ({chatRoom}) => {
       timestamp: "" + new Date(),
       userId: me.uid,
       userName: me.displayName,
-      userPhoto: me.photoURL
     }
 
     if (fileUrl !== null) {
@@ -74,6 +96,7 @@ const TalkForm = ({chatRoom}) => {
     try {
 
       await set(push(child(messagesRef, chatRoom.id)), createMessage());
+      await remove(child(typingRef, `${chatRoom.id}/${me.uid}`));
       setSendLoading(false);
       setTalkCon(''); 
     } catch (error) {
@@ -142,7 +165,7 @@ const TalkForm = ({chatRoom}) => {
           className='talk_header' 
           placeholder='메세지를 작성해주세요.' 
           onChange={handleTalkConChange} 
-          onKeyDown={handleKeyDown}
+          onKeyUp={handleKeyDown}
           value={talkCon}
         />
         <div className='btn_wrapper'>

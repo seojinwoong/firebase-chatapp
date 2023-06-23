@@ -24,24 +24,12 @@ export class Roomwrap extends Component {
     }
   }
 
-  setFirstChatRoom = () => {
-    const { firstLoad, chatRooms } = this.state;
-    if (firstLoad && chatRooms.length > 0) {
-      const firstChatRoom = chatRooms[0];
-      this.props.dispatch(setCurrentChatRoom(firstChatRoom));
-      this.setState({ firstLoad: false });
-      this.setState({ activeChatRoomId: firstChatRoom.id });
-    }
-  }
-
   AddChatRoomsListener = () => {
     let chatRoomsArray = [];
     
     onChildAdded(this.state.chatRoomsRef, DataSnapshot => {
       chatRoomsArray.push(DataSnapshot.val());
-      this.setState({ chatRooms: chatRoomsArray }, () => {
-        this.setFirstChatRoom();
-      });
+      this.setState({ chatRooms: chatRoomsArray });
     });
   }
 

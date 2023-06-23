@@ -13,7 +13,6 @@ import CustomToast from '../../../utils/components/CustomToast';
 import { useTransition, animated } from 'react-spring';
 import { defaultAnimation } from '../../../utils/ToastAnimation'; 
 import useInput from '../../../utils/hooks/useInput';
-import { doRender } from '../../../redux/actions/user_action';
 
 let timer;
 
@@ -76,7 +75,6 @@ const MyInfo = () => {
           });
 
           update(ref(getDatabase(), `users/${me.uid}`), {image: downloadURL});
-          dispatch(doRender());
         })
       });
       setUploadResult({txt: "프로필 사진 변경 완료!", status: 'success'});
@@ -110,7 +108,7 @@ const MyInfo = () => {
       description: talkDesc,
       createdBy: {
         name: me.displayName,
-        image: me.photoURL
+        image: me.photoURL || 'default image'
       }
     }
 

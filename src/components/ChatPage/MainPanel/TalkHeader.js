@@ -6,7 +6,7 @@ import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai'
 import {HiUserGroup} from 'react-icons/hi';
 import { BsSearch, BsFillChatSquareTextFill } from 'react-icons/bs';
 import { useSelector } from 'react-redux';
-import { onValue, child, getDatabase, ref, remove, update } from 'firebase/database';
+import { onValue, child, getDatabase, ref, remove, update, onChildRemoved, DataSnapshot } from 'firebase/database';
 
 const TalkHeader = ({searchTerm, handleChangeSearchTerm, currentChatRoom}) => {
   const chatRoom = useSelector(state => state.chatRoom_reducer.currentChatRoom);
@@ -22,7 +22,7 @@ const TalkHeader = ({searchTerm, handleChangeSearchTerm, currentChatRoom}) => {
       addFavoriteListener(chatRoom.id, me.uid);
     }
   }, []);
-  
+
   const addFavoriteListener = (chatRoomId, userId) => {
     onValue(child(usersRef, `${userId}/favorited`), data => {
       if (data.val() !== null) {
@@ -30,6 +30,10 @@ const TalkHeader = ({searchTerm, handleChangeSearchTerm, currentChatRoom}) => {
         const isAlreadyFavorited = chatRoomIds.includes(chatRoomId);
         setIsFavorite(isAlreadyFavorited);
       }
+    });
+
+    onChildRemoved(child(usersRef, `${userId}/favorited`), DataSnapshot => {
+      setIsFavorite(false);
     });
   }
 
